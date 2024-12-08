@@ -24,7 +24,7 @@ services:
     ## connecting the port on the local PostgreSQl engine - port 5432 - to the PostgreSQL engine in the container
     ## which is also 5432
     ports:
-      - "5433:5432"
+      - "5432:5432"
     # This specifies where - IN YOUR FILESYSTEM - the database data will be 
     volumes:
     - postgres-volume:/var/lib/postgresql/data
