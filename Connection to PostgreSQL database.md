@@ -82,9 +82,6 @@ services:
 		# Dockerfile path
 		context: .
 		dockerfile: Dockerfile
-		# Mount the local ./app directory to /var/www/html in the container
-		volumes:
-			- ./app:/var/www/html
 		# Map port 8000 on the host to port 80 on the container
 		ports:
 			- 8000:80
@@ -99,7 +96,7 @@ services:
 			POSTGRES_USER: db_user
 			POSTGRES_PASSWORD: db_password
 		ports:
-			- "5433:5432"
+			- "5432:5432"
 		volumes:
 			- postgres-volume:/var/lib/postgresql/data
 	
