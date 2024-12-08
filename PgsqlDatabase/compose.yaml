@@ -1,0 +1,36 @@
+services:
+  webserver:
+    container_name: Apache-Webserver
+    # Entry point for docker commands such as : docker compose up
+    build:
+      context: .
+      dockerfile: Dockerfile  
+    # connecting the browser's default HTTP request to our containers' 8000th port  
+    ports:
+      - 8000:80   
+    # this keeps us from making a service without an established database
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.0
+    container_name: postgres-database
+    # We can connect to the database using our local pgAdmin ( or any other tool ) application. 
+    ## using the following credentials
+    environment:
+      POSTGRES_DB: test_database
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_password
+    ## connecting the port on the local PostgreSQl engine - port 5432 - to the PostgreSQL engine in the container
+    ## which is also 5432
+    ports:
+      - "5433:5432"
+    # This specifies where - IN YOUR FILESYSTEM - the database data will be 
+    volumes:
+    - postgres-volume:/var/lib/postgresql/data
+
+# since it is a named service we need to mention it as a separate object
+volumes:
+  postgres-volume: ## referencing it
+    driver: local ## this is to say that is goes onto your filesystem. NOTE : It is also possible to specify another place
+    # which is not necessarily on your device - such as cloud storage.
